@@ -7,6 +7,7 @@ view: derivada1 {
         column: zip { field: users.zip }
         column: id { field: orders.id }
         column: state { field: users.state }
+        #--------------------------------------------------
         filters: {
           field: orders.statusss
           value: "complete"
@@ -16,6 +17,10 @@ view: derivada1 {
       }
 
     }
+
+
+
+
     dimension: brand {}
     dimension: first_name {}
     dimension: gender {}
@@ -27,7 +32,3 @@ view: derivada1 {
     }
     dimension: state {}
   }
-
-#wwwwww
-
-#RRRR

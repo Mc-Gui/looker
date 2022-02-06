@@ -39,6 +39,9 @@ persist_with: datagroup_probandoando
 # To see the Explore you’re building, navigate to the Explore menu and select an Explore under "Proyecto Copia"
 
 explore: inventory_items {
+
+  fields: [ALL_FIELDS*,-products.esteesunfiltro]
+
   join: products {
     type: left_outer
     foreign_key:inventory_items.product_id
@@ -47,6 +50,8 @@ explore: inventory_items {
 }
 
 explore: order_items {
+  fields: [ALL_FIELDS*,-products.esteesunfiltro]
+
   join: orders {
     type: left_outer
     sql_on: ${order_items.order_id} = ${orders.id} ;;
@@ -87,6 +92,7 @@ explore: order_items {
 
 
 explore: orders {
+  fields:[ALL_FIELDS*,-orders.dependedeotravista]
   join: users {
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;
@@ -95,6 +101,8 @@ explore: orders {
 }
 
 explore: product_facts {
+  fields: [ALL_FIELDS*,-products.esteesunfiltro]#para el error de que no se encuentra el campo
+
   join: products {
     type: left_outer
     sql_on: ${product_facts.product_id} = ${products.id} ;;
@@ -115,7 +123,9 @@ explore: sqlderivada1 {
 # Typically, join parameters require that you define the join type, join relationship, and a sql_on clause.
 # Each joined view also needs to define a primary key.
 
-explore: products {}
+explore: products {
+  fields: [ALL_FIELDS*,-products.esteesunfiltro]
+}
 
 explore: users {}
 

@@ -5,6 +5,15 @@ view: orders {
   sql_table_name: public.orders ;;
   drill_fields:[source*, id]
 
+
+filter: filtrodefecha3 {
+  type: date
+}
+
+dimension: esfecha {
+sql: {% date_start filtrodefecha3 %} ;;
+  }
+
   # This primary key is the unique key for this table in the underlying database.
   # You need to define a primary key in a view in order to join to other views.
 
@@ -12,7 +21,18 @@ view: orders {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
-  }
+
+
+
+}
+
+dimension: dependedeotravista {
+  type: string
+  sql:  ${TABLE}.id ;;
+  html:{% if products.brand3._value== 'Calvin Klein' %}
+        <p style="color: black; background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
+{% endif %};;
+}
 
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
@@ -28,7 +48,8 @@ view: orders {
       quarter,
       year,day_of_week
     ]
-    sql: ${TABLE}.created_at ;;
+    sql: dateadd(year,8,${TABLE}.created_at) ;;
+
   }
 
 measure:maximafecha
@@ -50,24 +71,72 @@ measure: diffecha
   parameter: timeframe_picker {
     label: "Date Granularity"
     type: string
-    allowed_value: { value: "Date" label: "To aggregate by Event Date"}
+    default_value: "Date"
+    allowed_value: { value: "Date" }
     allowed_value: { value: "Quarter" }
     allowed_value: { value: "Month" }
     allowed_value: { value: "Year" }
-    default_value: "Date"
   }
 
-dimension: fechadinamica {
+dimension: fechadinamic {
   label_from_parameter: timeframe_picker
-    sql:
-        CASE
-          WHEN {% parameter timeframe_picker %} = 'Date' THEN TO_CHAR(${created_date}, 'YYYY/MM/DD')
-          WHEN {% parameter timeframe_picker %} = 'Month' THEN ${created_month}
-          WHEN {% parameter timeframe_picker %} = 'Quarter' THEN ${created_quarter}
-          WHEN {% parameter timeframe_picker %} = 'Year' THEN TO_CHAR(${created_year},'9999')
+type:date
+sql:
+        CASE--estos casteos son para poder hacer cumplir con el tipo de dato de la dimension
+          WHEN {% parameter timeframe_picker %} = 'Date' THEN ${created_date}
+          WHEN {% parameter timeframe_picker %} = 'Month' THEN TO_DATE(${created_month},'YYYY-MM')--esto no se puede por que el tipo es date y este formato es una cadena
+          WHEN {% parameter timeframe_picker %} = 'Quarter' THEN TO_DATE(${created_quarter},'YYYY-MM')
+          WHEN {% parameter timeframe_picker %} = 'Year' THEN TO_DATE(${created_year},'YYYY')
           ELSE NULL
-        END ;;
+        END ;;#tambien se puede hacer esto con if
+
+  html:
+
+
+  {% if parameter.timeframe_picker._value == "'Date'" %}
+
+  {{ value | date: "%A, %B %e, %Y " }}
+
+  {% elsif parameter.timeframe_picker._value == 'Month' %}
+
+ {{ rendered_value | date: " %B %Y" }}
+
+  {% else %}
+
+  {{rendered_value}}
+
+  {% endif %}
+
+  ;;
+
+
+
+
+
 }
+
+# My customized timeframes, added under the group "Created"
+  dimension: date_formatted {
+    #group_label: "Created" label: "Date"
+    sql: ${created_date} ;;
+    html: {{ rendered_value | date: "%A, %B %e, %Y" }};;
+  }
+
+  dimension: week_formatted {
+    #group_label: "Created" label: "Week"
+    sql: ${created_week} ;;
+    html: {{ rendered_value | date: "Week %U (%b %d)" }};;
+  }
+
+  dimension: month_formatted {
+    #group_label: "Created" label: "Month"
+    sql: ${created_month} ;;
+    html: {{ rendered_value | append: "-01" | date: "%B %Y" }};;
+  }
+
+
+
+
 
 
 
@@ -89,21 +158,19 @@ dimension: fechadinamica {
           WHEN {% parameter dimension_picker %} = 'user_id' THEN TO_CHAR(${user_id},'9999')
           ELSE NULL
         END ;;
+
+
+
+
   }
 
 
-#esto aplica un filtro en un otro campo
-filter: esteesunfiltro {
-  type: string
-  sql: {% condition esteesunfiltro %}  {% endcondition %} ;;
+
+
+parameter: parafiltrarestatus {
+  type:string
+  allowed_value: {value:"Complete"}
 }
-
-
-
-
-  # Here's what a typical dimension looks like in LookML.
-  # A dimension is a groupable field that can be used to filter query results.
-  # This dimension will be called "Status" in Explore.
 
   dimension: statusss {
     type: string
@@ -120,6 +187,9 @@ filter: esteesunfiltro {
     type: number
     # hidden: yes
     sql: ${TABLE}.user_id ;;
+    label: "{{ _filters['statusss'] }}"
+
+
   }
 
 
@@ -131,6 +201,15 @@ filter: esteesunfiltro {
     type: count
     drill_fields: [id, users.id, users.first_name, users.last_name, order_items.count]
   }
+
+  measure: cancelled_orders_last_week {
+    type: count
+    filters: [statusss: "cancelled"]
+  }
+
+
+
+
 
   set: source {
 

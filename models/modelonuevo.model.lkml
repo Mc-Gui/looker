@@ -8,7 +8,10 @@ include: "/**/**/*.view"
 
 
 
-explore: products {}
+explore: products {
+  fields: [ALL_FIELDS*,-products.esteesunfiltro]
+}
+
 
 explore: users {}
 

@@ -19,7 +19,7 @@ view: users {
 
   dimension: sino {
     type: yesno
-    sql: ${first_name} like '%art'  ;;
+    sql: ${first_name} like '%Ade'  ;;
 }
 
   dimension: age {
@@ -30,6 +30,7 @@ view: users {
   dimension: city {
     type: string
     sql: ${TABLE}.city ;;
+    drill_fields: [country]
   }
 
   dimension: country {
@@ -92,6 +93,13 @@ view: users {
     type: yesno
     sql: ${TABLE}.gender like 'f' ;;
 }
+
+dimension: sinodoble {
+  type: yesno
+  sql: Case when  ${sinodim}='no' and ${gender}='m' then 1 else 0 end;;
+}
+
+
 
   dimension: zip {
     type: zipcode

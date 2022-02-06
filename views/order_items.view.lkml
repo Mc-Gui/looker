@@ -11,6 +11,39 @@ view: order_items {
   # This primary key is the unique key for this table in the underlying database.
   # You need to define a primary key in a view in order to join to other views.
 
+  parameter: parametrofec {
+    type: date
+    #default_value: "today" esto genera un error lookml, supongo por el tipo de dato
+  }
+
+
+  parameter: anio {
+    type: string
+    allowed_value: {value:"2001"}
+    allowed_value: {value:"2002"}
+  }
+
+  dimension: usandoparametrodate {
+    label_from_parameter:anio
+    sql: CASE
+      WHEN cast({%parameter parametrofec %}as date)=${returned_date}
+      THEN
+      'si'
+      ELSE 'otro'
+    END;;
+  }
+
+# --{%condition parametrofec%}${returned_date}{% endcondition %}
+
+#dimension: comparan {
+#sql:  {% if DATE(parametro_echa._parameter_value) == ${returned_date}%}
+#'1'
+#{% else %}
+#'0'
+#{% endif %};;
+#}
+
+
   dimension: id {
     primary_key: yes
     type: number
@@ -48,42 +81,8 @@ view: order_items {
       year
     ]
   #  datatype: date
-    sql: ${TABLE}.returned_at ;;
+    sql: DATEADD(year,8, ${TABLE}.returned_at) ;;
   }
-
-parameter: parametrofec {
-  type: date
-}
-
-
-parameter: anio {
-  type: string
-  allowed_value: {value:"2001"}
-  allowed_value: {value:"2002"}
-}
-
-
-
-dimension: usandoparametrodate {
-  label_from_parameter:anio
-  sql: CASE
-      WHEN cast({%parameter parametrofec %}as date)=${returned_date}
-      THEN
-      'si'
-      ELSE 'otro'
-    END;;
-}
-
-# --{%condition parametrofec%}${returned_date}{% endcondition %}
-
-#dimension: comparan {
-#sql:  {% if DATE(parametro_echa._parameter_value) == ${returned_date}%}
-#'1'
-#{% else %}
-#'0'
-#{% endif %};;
-#}
-
 
   dimension: sale_price {
     type: number
@@ -114,7 +113,10 @@ dimension: usandoparametrodate {
     type: sum
     hidden: yes
     sql: ${sale_price} ;;
-  }
+
+#can_filter:yes
+}
+
 
   measure: average_sale_price {
     type: average

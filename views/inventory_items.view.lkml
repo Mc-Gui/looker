@@ -39,9 +39,9 @@ parameter: parametro {
 
   dimension: liquidObject {
     type: string
-    link: {
-      url: " https://help.looker.com/hc/en-us/articles/360023722974-A-Simple-Explanation-of-Symmetric-Aggregates-or-Why-On-Earth-Does-My-SQL-Look-Like-That-"
-    }
+    #link: {
+   #   url: " https://help.looker.com/hc/en-us/articles/360023722974-A-Simple-Explanation-of-Symmetric-Aggregates-or-Why-On-Earth-Does-My-SQL-Look-Like-That-"
+    #}
 
     #sql: '{{ link}}' ;;<------no supe
     #sql: '{{_model._name}}' ;;  #----> imprime el nombre del proyecto

@@ -7,25 +7,30 @@ view: products {
   # This primary key is the unique key for this table in the underlying database.
   # You need to define a primary key in a view in order to join to other views.
 
+
+#esto aplica un filtro en un otro campo, aparece en el where
+  filter: esteesunfiltro {
+    type: number
+    sql: {% if orders.id._is_selected%}
+               {%condition esteesunfiltro%}${products.id}{% endcondition %}
+          {%endif%} ;;
+  }
+
+
+  #----------------------------------------DIMENSION----------------------------
+
   dimension: id {
    primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
   }
 
-  # Here's what a typical dimension looks like in LookML.
-  # A dimension is a groupable field that can be used to filter query results.
-  # This dimension will be called "Brand" in Explore.
 
   dimension: brand {
-
-    type: string
-
-    #drill_fields: [brand,category]
-
-   sql: ${TABLE}.brand ;;
-
-   ## suggest_dimension: brand2  para que las saugerencias vengan de otra dimension
+       type: string
+        #drill_fields: [brand,category]
+        sql: ${TABLE}.brand ;;
+       ## suggest_dimension: brand2  para que las saugerencias vengan de otra dimension
 
     link: {
      # url:"https:// {{value}}"
@@ -62,28 +67,18 @@ view: products {
   }
 
   dimension: brand3 {
-
-    sql: ${TABLE}.brand ;;
-
-    html:
-
-    {% if value == '2EROS' %}
-
-      <p style="color: black; background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
-
-
-    {% else %}
-
-      <p style="color: black; background-color: orange; font-size:100%; text-align:center">{{ rendered_value }}</p>
-
-    {% endif %};;
+      sql: ${TABLE}.brand ;;
+      html:
+          {% if value == 'Calvin Klein' %}
+              <p style="color: black; background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
+          {% endif %};;
     }
 
 
-
   dimension: category {
-    type: string
+       type: string
     sql: ${TABLE}.category ;;
+    label: "{{ _filters['products.department'] }}"#etiqueta que depende de un filtro
   }
 
   dimension: department {
@@ -147,5 +142,7 @@ view: products {
     sql: ${retail_price} ;;
   }
 #cambio
+
+
 
   }
