@@ -1,7 +1,8 @@
 view: derivada1 {
     derived_table: {
 
-      #sql_trigger_value: SELECT CURDATE() ;;
+      sql_trigger_value: SELECT DATE_PART('hour', GETDATE()) ;;
+
 
       explore_source: order_items {
         column: brand { field: products.brand }
