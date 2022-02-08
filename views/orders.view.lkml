@@ -97,7 +97,7 @@ sql:
 
   {{ value | date: "%A, %B %e, %Y " }}
 
-  {% elsif parameter.timeframe_picker._value == 'Month' %}
+  {% elsif parameter.timeframe_picker._value == "'Month'" %}
 
  {{ rendered_value | date: " %B %Y" }}
 

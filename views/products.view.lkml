@@ -11,17 +11,24 @@ view: products {
 #esto aplica un filtro en un otro campo, aparece en el where
   filter: esteesunfiltro {
     type: number
-    sql: {% if orders.id._is_selected%}
+    sql: {% if orders.id._is_selected or users.id._is_selected%}
                {%condition esteesunfiltro%}${products.id}{% endcondition %}
           {%endif%} ;;
   }
 
 
+parameter: hombre_mujer{
+  type: string
+  default_value: "Women"
+  allowed_value: {label:"Mujer" value:"Women" }
+  allowed_value: {label:"hombre" value:"Men"}
+}
+
   #----------------------------------------DIMENSION----------------------------
 
   dimension: id {
    primary_key: yes
-    type: number
+    type: string
     sql: ${TABLE}.id ;;
   }
 

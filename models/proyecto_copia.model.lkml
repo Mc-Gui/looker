@@ -93,6 +93,7 @@ explore: order_items {
 
 explore: orders {
   fields:[ALL_FIELDS*,-orders.dependedeotravista]
+
   join: users {
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;
@@ -127,9 +128,16 @@ explore: products {
   fields: [ALL_FIELDS*,-products.esteesunfiltro]
 }
 
+explore: productsDeMujer {
+  from: products
+  sql_always_where: productsDeMujer.department={% parameter productsDeMujer.hombre_mujer %};;#va el nombre del explore
+  fields: [ALL_FIELDS*,-productsDeMujer.esteesunfiltro]
+}
+
 explore: users {}
 
 explore: test1{}
 explore: filtrofiltro {}
 explore: nueva {}
 explore: dynamic {}
+explore: derivada1 {}

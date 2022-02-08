@@ -1,6 +1,20 @@
 view: dynamic{
 
-  sql_table_name: {% parameter tablename %};;
+  sql_table_name:
+  --{{ _user_attributes['name_of_attribute'] }}.orders -- vista del esquema X
+ --{% parameter tablename %}  -------elejir la tabla por el parametro
+
+      {% if _user_attributes['name'] == 'value' %}
+
+        ${view_name.field_name}={{_user_attributes['name']}}
+
+      {% else %}
+
+        1=1
+
+      {% endif %} ;;
+
+
 
   parameter: tablename {
     type: unquoted
@@ -10,7 +24,7 @@ view: dynamic{
     }
     allowed_value: {
       label: "products"
-      value: "prpducts"
+      value: "products"
     }
   }
 
@@ -19,6 +33,6 @@ view: dynamic{
   }
 
   dimension: nombre_tabla {
-    sql: '{{_view._name}}' ;;
+    sql: '{{tablename._parameter_value  }}' ;;
   }
 }

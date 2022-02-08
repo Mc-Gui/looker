@@ -1,5 +1,8 @@
 view: derivada1 {
     derived_table: {
+
+      #sql_trigger_value: SELECT CURDATE() ;;
+
       explore_source: order_items {
         column: brand { field: products.brand }
         column: first_name { field: users.first_name }
@@ -28,6 +31,7 @@ view: derivada1 {
       type: zipcode
     }
     dimension: id {
+      primary_key: yes
       type: number
     }
     dimension: state {}

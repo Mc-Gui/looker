@@ -1,6 +1,6 @@
 view: sqlderivada1 {
   derived_table: {
-    persist_for: "2 hours"
+  #  persist_for: "2 hours"
     sql: SELECT
           "products"."brand" AS "products.brand",
           "users"."first_name" AS "users.first_name",
