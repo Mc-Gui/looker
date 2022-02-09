@@ -136,6 +136,13 @@ explore: productsDeMujer {
 
 explore: users {}
 
+explore: users_filtrados {
+  from: users
+  sql_always_where: ${users_filtrados.created_date}<={% parameter users_filtrados.filtrodefecha %};;#va el nombre del explore
+
+
+}
+
 explore: test1{}
 explore: filtrofiltro {}
 explore: nueva {}

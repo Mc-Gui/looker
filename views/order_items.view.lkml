@@ -48,7 +48,17 @@ view: order_items {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
+    suggest_dimension:order_items.stringtype
+
   }
+
+
+  dimension: stringtype {
+    hidden: yes
+    type: string
+    sql: ${TABLE}.id ;;
+  }
+
 
   # Here's what a typical dimension looks like in LookML.
   # A dimension is a groupable field that can be used to filter query results.
