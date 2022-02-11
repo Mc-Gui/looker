@@ -199,7 +199,7 @@ parameter: parafiltrarestatus {
 
   measure: count {
     type: count
-    drill_fields: [id, users.id, users.first_name, users.last_name, order_items.count]
+    #drill_fields: [id, users.id, users.first_name, users.last_name, order_items.count]
   }
 
   measure: cancelled_orders_last_week {
@@ -213,7 +213,7 @@ parameter: parafiltrarestatus {
 
   set: source {
 
-    fields: [traffic_source, created_date]
+    fields: [traffic_source, created_date,products.brand]
 
   }
   #comit

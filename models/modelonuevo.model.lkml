@@ -17,3 +17,4 @@ explore: users {}
 
 explore: test1{}
 explore: filtrofiltro {}
+explore: vistaextendida {}

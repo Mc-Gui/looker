@@ -39,14 +39,14 @@ parameter: hombre_mujer{
         sql: ${TABLE}.brand ;;
        ## suggest_dimension: brand2  para que las saugerencias vengan de otra dimension
 
-    link: {
+    #link: {
      # url:"https:// {{value}}"
-      label: "primer liquid"
+      #label: "ñññ "
       #url: "https://revistaquem.globo.com/QUEM-News/noticia/2021/08/namorada-da-thiago-oliveira-comenta-brincadeira-de-ana-maria-braga-estou-vendo.html"
       #url: "http://www.google.com/search?q={{ value }}"#es para llevar a una pagina
 
      # drill to a dashboard
-      url: "https://dcltraining.dev.looker.com/dashboards/526?Sold%20Date=2021%2F12%2F02%20to%202021%2F12%2F03&Cost=%5B0,100%5D&Brand3={{value}}"
+     # url:"https://dcltraining.dev.looker.com/dashboards/743?Gender={{ users.gender._value }}"
 
       #drill to a explorer
       #url: "https://dcltraining.dev.looker.com/explore/proyecto_copia/order_items?fields=orders.count,products.brand&f[products.brand]={{value}}"
@@ -71,7 +71,7 @@ parameter: hombre_mujer{
      # <font color="darkred">{{ rendered_value }}</font>
     #{% endif %}
     #</a>;;
-  }
+  #}
 
   dimension: brand3 {
       sql: ${TABLE}.brand ;;
@@ -103,6 +103,11 @@ parameter: hombre_mujer{
     sql: ${TABLE}.rank ;;
   }
 
+  measure: rank_clon {
+    type: sum
+    sql: ${TABLE}.rank ;;
+  }
+
   dimension: retail_price {
     type: number
     sql: ${TABLE}.retail_price ;;
@@ -120,6 +125,24 @@ parameter: hombre_mujer{
   measure: count {
     type: count
     drill_fields: [id, item_name, inventory_items.count, product_facts.count]
+    link: {
+      # url:"https:// {{value}}"
+      label: "drilling "
+      #url: "https://revistaquem.globo.com/QUEM-News/noticia/2021/08/namorada-da-thiago-oliveira-comenta-brincadeira-de-ana-maria-braga-estou-vendo.html"
+      #url: "http://www.google.com/search?q={{ value }}"#es para llevar a una pagina
+
+      # drill to a dashboard
+      url:"https://dcltraining.dev.looker.com/dashboards/743?Gender={{ users.gender._value }}"
+
+      #drill to a explorer
+      #url: "https://dcltraining.dev.looker.com/explore/proyecto_copia/order_items?fields=orders.count,products.brand&f[products.brand]={{value}}"
+
+      #Adding Custom Limits (up to 5000)
+      #url: "{{link}}&limit=3"
+
+
+    }
+
   }
 
   # These sum and average measures are hidden by default.

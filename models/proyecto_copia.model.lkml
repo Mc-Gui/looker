@@ -10,6 +10,7 @@ include: "/views/**/*.view"
 # use the Quick Help panel on the right to see documentation.
 
 include: "/explores/explorpaextender.explore.lkml"
+include: "/*/**/lookmlpivoteado.dashboard"
 
 
 datagroup: proyecto_copia_default_datagroup {
@@ -138,7 +139,8 @@ explore: users {}
 
 explore: users_filtrados {
   from: users
-  sql_always_where: ${users_filtrados.created_date}<={% parameter users_filtrados.filtrodefecha %};;#va el nombre del explore
+  sql_always_where: DATE_TRUNC('year', {% parameter users_filtrados.filtrodefecha %}) <=${users_filtrados.created_date}
+                and  ${users_filtrados.created_date}<={% parameter users_filtrados.filtrodefecha %} ;;#va el nombre del explore
 
 
 }

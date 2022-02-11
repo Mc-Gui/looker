@@ -80,6 +80,14 @@ parameter: filtrodefecha {
     sql: ${TABLE}.gender ;;
   }
 
+  dimension: gender_copy {
+    type: string
+    sql: ${TABLE}.gender ;;
+  }
+
+
+
+
   dimension: last_name {
     type: string
     sql: ${TABLE}.last_name ;;
@@ -172,10 +180,9 @@ dimension: sinodoble {
 
 
 
-  measure: sumamal {
+  dimension: sumamala {
     type:number
-    hidden: yes
-    sql: sum(${age}) ;;
+    sql: ${age}+${age} ;;
 
 
   }
