@@ -10,7 +10,8 @@ include: "/views/**/*.view"
 # use the Quick Help panel on the right to see documentation.
 
 include: "/explores/explorpaextender.explore.lkml"
-include: "/*/**/lookmlpivoteado.dashboard"
+include: "lookmlpivoteado.dashboard.lookml"
+include: "/**/**/dashboardcreadodesdelookml.dashboard.lookml"
 
 
 datagroup: proyecto_copia_default_datagroup {
