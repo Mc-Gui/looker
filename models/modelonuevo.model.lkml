@@ -8,13 +8,9 @@ include: "/**/**/*.view"
 
 
 
-explore: products {
-  fields: [-products.esteesunfiltro]
-}
 
 
 explore: users {}
 
 explore: test1{}
 explore: filtrofiltro {}
-explore: vistaextendida {}
