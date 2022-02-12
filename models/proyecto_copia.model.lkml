@@ -129,15 +129,14 @@ explore: sqlderivada1 {
 
 explore: products {
   fields: [-products.esteesunfiltro]
+
 }
 
 explore: productsDeMujer {
-  view_name: products
- # sql_always_where: productsDeMujer.department={% parameter productsDeMujer.hombre_mujer %};;#va el nombre del explore
-  fields: [-products.esteesunfiltro]
+  from: products
+ # sql_always_where: productsDeMujer.department={% parameter productsDeMujer.parafiltrarconparametro %};;#va el nombre del explore
+  fields: [-productsDeMujer.esteesunfiltro]
 }
-
-
 
 explore: users_filtrados {
   from: users

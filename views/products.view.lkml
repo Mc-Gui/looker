@@ -17,12 +17,6 @@ view: products {
   }
 
 
-parameter: hombre_mujer{
-  type: string
-  default_value: "Women"
-  allowed_value: {label:"Mujer" value:"Women" }
-  allowed_value: {label:"hombre" value:"Men"}
-}
 
   #----------------------------------------DIMENSION----------------------------
 
