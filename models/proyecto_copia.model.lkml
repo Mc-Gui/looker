@@ -9,9 +9,7 @@ include: "/views/**/*.view"
 # Datagroups define a caching policy for an Explore. To learn more,
 # use the Quick Help panel on the right to see documentation.
 
-include: "/explores/explorpaextender.explore.lkml"
-include: "lookmlpivoteado.dashboard.lookml"
-include: "/**/**/dashboardcreadodesdelookml.dashboard.lookml"
+include: "/dashboards/*.dashboard.lookml"
 
 
 datagroup: proyecto_copia_default_datagroup {
@@ -42,17 +40,18 @@ persist_with: datagroup_probandoando
 
 explore: inventory_items {
 
-  fields: [ALL_FIELDS*,-products.esteesunfiltro]
+  fields: [ALL_FIELDS*]
 
   join: products {
     type: left_outer
     foreign_key:inventory_items.product_id
     relationship: many_to_one
+    fields: [-products.esteesunfiltro]
   }
 }
 
 explore: order_items {
-  fields: [ALL_FIELDS*,-products.esteesunfiltro]
+
 
   join: orders {
     type: left_outer
@@ -77,17 +76,18 @@ explore: order_items {
     type: left_outer
     sql_on: ${inventory_items.product_id} = ${products.id} ;;
     relationship: many_to_one
+
   }
 #------------muchos filtros--------------
- always_filter: {
-  filters: [orders.statusss: "complete"]
+  always_filter: {
+    filters: [orders.statusss: "complete"]
   }
 
 #  sql_always_where: ${orders.statusss}='complete' ;;
 
   #conditionally_filter: {
-   # filters: [orders.statusss: "complete"]
-    #unless: [products.brand]
+  # filters: [orders.statusss: "complete"]
+  #unless: [products.brand]
   #}
 
 }
@@ -104,12 +104,13 @@ explore: orders {
 }
 
 explore: product_facts {
-  fields: [ALL_FIELDS*,-products.esteesunfiltro]#para el error de que no se encuentra el campo
 
+  fields: [ALL_FIELDS*]#para el error de que no se encuentra el campo
   join: products {
     type: left_outer
     sql_on: ${product_facts.product_id} = ${products.id} ;;
     relationship: many_to_one
+    fields: [-products.esteesunfiltro]#para el error de que no se encuentra el campo
   }
 
 }
@@ -127,27 +128,21 @@ explore: sqlderivada1 {
 # Each joined view also needs to define a primary key.
 
 explore: products {
-  fields: [ALL_FIELDS*,-products.esteesunfiltro]
+  fields: [-products.esteesunfiltro]
 }
 
 explore: productsDeMujer {
-  from: products
-  sql_always_where: productsDeMujer.department={% parameter productsDeMujer.hombre_mujer %};;#va el nombre del explore
-  fields: [ALL_FIELDS*,-productsDeMujer.esteesunfiltro]
+  view_name: products
+ # sql_always_where: productsDeMujer.department={% parameter productsDeMujer.hombre_mujer %};;#va el nombre del explore
+  fields: [-products.esteesunfiltro]
 }
 
-explore: users {}
+
 
 explore: users_filtrados {
   from: users
   sql_always_where: DATE_TRUNC('year', {% parameter users_filtrados.filtrodefecha %}) <=${users_filtrados.created_date}
-                and  ${users_filtrados.created_date}<={% parameter users_filtrados.filtrodefecha %} ;;#va el nombre del explore
-
-
+    and  ${users_filtrados.created_date}<={% parameter users_filtrados.filtrodefecha %} ;;#va el nombre del explore
 }
 
-explore: test1{}
-explore: filtrofiltro {}
-explore: nueva {}
-explore: dynamic {}
-explore: derivada1 {}
+explore: users {}

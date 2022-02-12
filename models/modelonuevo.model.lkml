@@ -9,7 +9,7 @@ include: "/**/**/*.view"
 
 
 explore: products {
-  fields: [ALL_FIELDS*,-products.esteesunfiltro]
+  fields: [-products.esteesunfiltro]
 }
 
 

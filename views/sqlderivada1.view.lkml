@@ -1,5 +1,6 @@
 view: sqlderivada1 {
   derived_table: {
+    distribution_style: all
     persist_for: "30 minutes"
     sql: SELECT
           "products"."brand" AS "products.brand",

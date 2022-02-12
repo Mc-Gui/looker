@@ -1,11 +1,11 @@
 include: "orders.view"
-include: "products.view"
+#include: "products.view"
 view: vistaextendida {
 
-  extends: [orders,products]
+  #extends: [orders,products]
 
   dimension: id_concatenado {
-    sql: ${statusss};;
+  #  sql: ${statusss};;
   }
 
  }
