@@ -1,7 +1,7 @@
 view: derivada1 {
     derived_table: {
 
-      sql_trigger_value: SELECT DATE_PART('hour', GETDATE()) ;;
+     # sql_trigger_value: SELECT DATE_PART('hour', GETDATE()) ;;
 
 
       explore_source: order_items {
@@ -17,7 +17,10 @@ view: derivada1 {
           value: "complete"
         }
         #bind_all_filters: yes
-
+        filters: {
+          field: products.brand
+          value: "complete"
+        }
       }
 
     }

@@ -48,7 +48,7 @@ dimension: dependedeotravista {
       quarter,
       year,day_of_week
     ]
-    sql: dateadd(year,8,${TABLE}.created_at) ;;
+    sql: dateadd(year,1,${TABLE}."created_at") ;;
 
   }
 
@@ -60,12 +60,20 @@ measure:maximafecha
 
 }
 
-measure: diffecha
+measure: diffdate #es medida por q usa una funcion de agregacion
 {
   type: number
   sql: datediff(day,${maximafecha},GETDATE()) ;;
 }
 
+
+measure: morethan7 {
+
+  sql:CASE WHEN ${diffdate} >2500
+       THEN ${diffdate}
+       ELSE NULL
+       END ;;
+}
 
   #crea un picker
   parameter: timeframe_picker {
@@ -91,27 +99,21 @@ sql:
         END ;;#tambien se puede hacer esto con if
 
   html:
+      {% if parameter timeframe_picker._value = "'Date'" %}
 
+  #{{ value | date: "%A, %B %e, %Y " }}
 
-  {% if parameter timeframe_picker._value == "'Date'" %}
+  #{% elsif parameter timeframe_picker._value == "'Month'" %}
 
-  {{ value | date: "%A, %B %e, %Y " }}
+ #{{ rendered_value | date: " %B %Y" }}
 
-  {% elsif parameter timeframe_picker._value == "'Month'" %}
+  #{% else %}
 
- {{ rendered_value | date: " %B %Y" }}
+  #{{rendered_value}}
 
-  {% else %}
-
-  {{rendered_value}}
-
-  {% endif %}
+  #{% endif %}
 
   ;;
-
-
-
-
 
 }
 

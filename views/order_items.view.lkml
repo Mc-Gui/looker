@@ -91,7 +91,7 @@ view: order_items {
       year
     ]
   #  datatype: date
-    sql: DATEADD(year,8, ${TABLE}.returned_at) ;;
+    sql: DATEADD(hours,-4, ${TABLE}.returned_at) ;;
   }
 
   dimension: sale_price {

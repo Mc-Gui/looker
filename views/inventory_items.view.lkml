@@ -104,6 +104,14 @@ parameter: parametro {
       year
     ]
     sql: ${TABLE}.sold_at ;;
+
+
+    html:{% if _user_attributes['magali'] %}
+           {{ rendered_value | date: "%m/%d/%Y  " }}
+            {% else %}
+            {{ rendered_value | date: "%Y/%d/%m"   }}
+    {% endif %} ;;
+
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are count, sum, and average

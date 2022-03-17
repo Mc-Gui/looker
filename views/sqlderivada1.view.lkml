@@ -1,14 +1,15 @@
 view: sqlderivada1 {
   derived_table: {
     distribution_style: all
-    persist_for: "30 minutes"
+    persist_for: "50 minutes"
     sql: SELECT
           "products"."brand" AS "products.brand",
           "users"."first_name" AS "users.first_name",
           "users"."gender" AS "users.gender",
           "users"."zip" AS "users.zip",
           "orders"."id" AS "orders.id",
-          "users"."state" AS "users.state"
+          "users"."state" AS "users.state",
+          (DATE("users"."created_at")) AS "users.created_date"
       FROM
           "public"."order_items" AS "order_items"
           LEFT JOIN "public"."orders" AS "orders" ON "order_items"."order_id" = "orders"."id"
@@ -17,11 +18,14 @@ view: sqlderivada1 {
           LEFT JOIN "public"."products" AS "products" ON "inventory_items"."product_id" = "products"."id"
       --WHERE "orders"."status" = 'complete'
 
-      -- WHERE {% condition select_state %} users.state {% endcondition %} --puede ir con comillas "users"."state"
+      --        WHERE {% condition select_state %} users.state {% endcondition %} --puede ir con comillas "users"."state"
         --      OR "users"."first_name"={%parameter parametrosnombres%}
 
         --static filter esto solo es para tablas nativas
          --filters: [users.state: "365 days"]
+
+         WHERE
+        {% condition filterdate %} users.created_at {% endcondition %}
 
 
 
@@ -32,7 +36,8 @@ view: sqlderivada1 {
           3,
           4,
           5,
-          6
+          6,
+          7
        ;;
   }
 
@@ -50,6 +55,10 @@ parameter: parametrosnombres {
   allowed_value: {value:"Joshua"}
   allowed_value: {value:"Evelyn"}
 
+}
+
+filter: filterdate {
+  type: date
 }
 
 

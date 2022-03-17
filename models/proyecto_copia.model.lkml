@@ -46,7 +46,7 @@ explore: inventory_items {
     type: left_outer
     foreign_key:inventory_items.product_id
     relationship: many_to_one
-    fields: [-products.esteesunfiltro]
+    #fields: [-products.esteesunfiltro]
   }
 }
 
@@ -110,7 +110,7 @@ explore: product_facts {
     type: left_outer
     sql_on: ${product_facts.product_id} = ${products.id} ;;
     relationship: many_to_one
-    fields: [-products.esteesunfiltro]#para el error de que no se encuentra el campo
+    #fields: [-products.esteesunfiltro]#para el error de que no se encuentra el campo
   }
 
 }
@@ -128,14 +128,14 @@ explore: sqlderivada1 {
 # Each joined view also needs to define a primary key.
 
 explore: products {
-  fields: [-products.esteesunfiltro]
+ # fields: [-products.esteesunfiltro]
 
 }
 
 explore: productsDeMujer {
   from: products
  # sql_always_where: productsDeMujer.department={% parameter productsDeMujer.parafiltrarconparametro %};;#va el nombre del explore
-  fields: [-productsDeMujer.esteesunfiltro]
+  #fields: [-productsDeMujer.esteesunfiltro]
 }
 
 explore: users_filtrados {
@@ -145,3 +145,6 @@ explore: users_filtrados {
 }
 
 explore: users {}
+explore: derivada1 {
+  persist_for: "20 minutes"
+}
