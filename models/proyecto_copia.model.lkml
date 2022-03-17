@@ -146,5 +146,5 @@ explore: users_filtrados {
 
 explore: users {}
 explore: derivada1 {
-  persist_for: "20 minutes"
+  persist_for: "0 seconds"
 }
