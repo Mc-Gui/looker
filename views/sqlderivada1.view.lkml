@@ -1,8 +1,8 @@
 view: sqlderivada1 {
   derived_table: {
     distribution_style: all
-    #sql_trigger_value: SELECT CURRENT_DATE ;;
-    persist_for: "1 minutes"
+    sql_trigger_value: SELECT CURRENT_DATE ;;
+    #persist_for: "1 minutes"
     sql: SELECT
           "products"."brand" AS "products.brand",
           "users"."first_name" AS "users.first_name",
