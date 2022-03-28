@@ -13,7 +13,7 @@ view: inventory_items {
 
 
   dimension: id {
-    primary_key: yes
+   # primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
   }
@@ -89,7 +89,7 @@ parameter: parametro {
     type: number
     # hidden: yes
     sql: ${TABLE}.product_id ;;
-    drill_fields: [cost]
+    drill_fields: [product_id]
   }
 
   dimension_group: sold {
